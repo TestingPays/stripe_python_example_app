@@ -5,7 +5,6 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 
 stripe.api_key = settings.STRIPE_SECRET
-stripe.api_base = settings.STRIPE_BASE_URL
 
 
 @require_http_methods(['GET'])
@@ -15,6 +14,9 @@ def main(request):
 
 @require_http_methods(['POST'])
 def donations(request):
+    if settings.STRIPE_BASE_URL:
+        stripe.api_base = settings.STRIPE_BASE_URL
+
     try:
         stripe.Charge.create(
             amount=remove_decimal_places(extract_amount(request)),
