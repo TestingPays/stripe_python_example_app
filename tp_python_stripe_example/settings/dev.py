@@ -20,5 +20,4 @@ STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', '<insert-your-publishable-s
 STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'insert-your-private-stripe-key-here')
 
 # Set the base URL to Testing Pays API
-STRIPE_BASE_URL = "https://api.testingpays.com/stripe"
-
+STRIPE_BASE_URL = "https://api.testingpays.com/{0}/stripe".format(STRIPE_SECRET)
