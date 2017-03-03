@@ -13,7 +13,7 @@ def main(request):
 
 
 @require_http_methods(['POST'])
-def donations(request):
+def charges(request):
     if settings.STRIPE_BASE_URL:
         stripe.api_base = settings.STRIPE_BASE_URL
 

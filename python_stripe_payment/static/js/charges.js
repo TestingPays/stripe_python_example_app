@@ -39,7 +39,7 @@ $(function () {
     }
 
     /**
-     * Sends a post request to the donation_controller with the amount and token
+     * Sends a post request to the charges_controller with the amount and token
      * attributes.
      *
      * @method stripeResponseHandler
@@ -54,7 +54,7 @@ $(function () {
 
         } else {
             // Send a post request to the charges route
-            $.post('/donations', {stripeToken: response.id, amount: $('#amount').val()})
+            $.post('/charges', {stripeToken: response.id, amount: $('#amount').val()})
                 .done(res => showSuccess(res.responseText))
                 .fail(err => handleErrors(err))
                 .always(function () {
