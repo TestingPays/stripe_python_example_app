@@ -20,12 +20,7 @@ Then run the server, using the manage.py file.
 ```bash
 $ python manage.py runserver 8000 --settings=tp_python_stripe_example.settings.dev
 ```
-
-## Using it with Testing Pays
-
-[Testing Pays](http://www.testingpays.com) lets you test and simulate more than you would be able to do with regular API sandboxes. The application is setup so you can avail using your [Testing Pays API key](https://admin.testingpays.com) to test and prepare for errors, validation issues, server errors or even network outages.
-
-### Updating API Keys
+## API Keys
 
 ```python
 STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', '<insert-your-publishable-stripe-key-here>')
@@ -34,9 +29,6 @@ STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', '<insert-your-publishable-s
 
 # Use your Testing Pays API key here
 STRIPE_SECRET = os.getenv('STRIPE_SECRET', '<insert-your-private-stripe-key-here>')
-
-# Set the base URL to Testing Pays API
-STRIPE_BASE_URL = "https://api.testingpays.com/stripe"
 ```
 
 The [dev.py](tp_python_stripe_example/settings/dev.py) within the settings folder allows for testing settings to be kept separate from production settings. Update both the `STRIPE_PUBLISHABLE` key that you got from Stripe and `STRIPE_SECRET` key available from Testing Pays within the `dev.py` file. The Stripe base url is also updated within the dev settings file to point to the Testing Pays API.
@@ -47,6 +39,21 @@ Stripe.setPublishableKey('<insert-your-publishable-stripe-key-here>');
 
 In addition, update the `Stripe.setPublishableKey` with your Stripe Publishable key in the [charges.js](python_stripe_payment/static/js/charges.js)
 file.
+
+## Using it with Testing Pays
+
+[Testing Pays](http://www.testingpays.com) lets you test and simulate more than you would be able to do with regular API sandboxes. The application is setup so you can avail using your [Testing Pays API key](https://admin.testingpays.com) to test and prepare for errors, validation issues, server errors or even network outages.
+
+```python
+# Testing Pays Configurations
+TESTINGPAYS_API_KEY = "<insert-your-testing-pays-api-key-here>"
+
+# ...
+
+STRIPE_SECRET = os.environ.get("STRIPE_SECRET", TESTINGPAYS_API_KEY)
+# Set the base URL to Testing Pays API
+STRIPE_BASE_URL = "https://api.testingpays.com/{0}/stripe/v1/charges".format(TESTINGPAYS_API_KEY)
+```
 
 ## Production versus Development Environments
 
