@@ -14,6 +14,8 @@ def main(request):
 
 @require_http_methods(['POST'])
 def charges(request):
+    
+    # if stripe base url not found in settings, use the default url
     if settings.STRIPE_BASE_URL:
         stripe.api_base = settings.STRIPE_BASE_URL
 
